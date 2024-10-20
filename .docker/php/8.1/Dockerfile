@@ -1,4 +1,6 @@
-FROM php:7.4-fpm-buster
+FROM php:8.1-fpm-buster
+
+ENV COMPOSER_HOME /root/.composer/
 
 RUN apt-get update && apt-get install -y \
   cron \
@@ -52,5 +54,8 @@ RUN curl -sS https://getcomposer.org/installer | \
 COPY ./www.conf /usr/local/etc/php-fpm.d/
 COPY ./php.ini /usr/local/etc/php/
 COPY ./php-fpm.conf /usr/local/etc/
+COPY ./auth.json $COMPOSER_HOME
+COPY ./install_magento.sh /usr/local/bin/install_magento.sh
+RUN chmod +x /usr/local/bin/install_magento.sh
 
 WORKDIR /var/www/html

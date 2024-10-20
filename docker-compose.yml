@@ -9,9 +9,9 @@ services:
       - phpfpm
       - redis:cache
     volumes:
-      - ./magento:/var/www/html
-      - ./services/sock_data:/sock
-      - ./services/nginx_log:/var/log/nginx
+      - ./magento:/var/www/html          # Keep local directory for Magento
+      - sock_data:/sock                  # Named volume
+      - nginx_log:/var/log/nginx          # Named volume
       #- ./frontend/${FRONTEND_VENDOR_NAME}:/var/www/html/app/design/frontend/${FRONTEND_VENDOR_NAME}
       #- ./backend/${BACKEND_VENDOR_NAME}:/var/www/html/app/code/${BACKEND_VENDOR_NAME}
     networks:
@@ -23,10 +23,10 @@ services:
     links:
       - db
     volumes:
-      - ./.docker/php/${PHP_VERSION}/.composer:/var/www/.composer
-      - ./magento:/var/www/html
-      - ./services/sock_data:/sock
-      - ./services/phpfpm_log:/var/log
+      # - ./.docker/php/${PHP_VERSION}/.composer:/var/www/.composer
+      - ./magento:/var/www/html          # Keep local directory for Magento
+      - sock_data:/sock                  # Named volume
+      - phpfpm_log:/var/log              # Named volume
       #- ./frontend/${FRONTEND_VENDOR_NAME}:/var/www/html/app/design/frontend/${FRONTEND_VENDOR_NAME}
       #- ./backend/${BACKEND_VENDOR_NAME}:/var/www/html/app/code/${BACKEND_VENDOR_NAME}
     networks:
@@ -36,7 +36,7 @@ services:
     image: redis:${REDIS_VERSION}
     restart: on-failure:5
     volumes:
-      - ./services/redis_data:/data
+      - redis_data:/data                 # Named volume
     expose:
       - 6379
     networks:
@@ -51,8 +51,8 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     command: ["--log_bin_trust_function_creators=1"]
     volumes:
-      - ./services/mysql_data:/var/lib/mysql
-      - ./services/mysql_log:/var/log/mysql
+      - mysql_data:/var/lib/mysql         # Named volume
+      - mysql_log:/var/log/mysql          # Named volume
     ports:
       - 3306:3306
     networks:
@@ -79,8 +79,8 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - ./services/es_data:/usr/share/elasticsearch/data
-      - ./services/es_log:/var/log/elasticsearch
+      - es_data:/usr/share/elasticsearch/data   # Named volume
+      - es_log:/var/log/elasticsearch           # Named volume
     ports:
       - 9200:9200
     networks:
@@ -100,3 +100,13 @@ services:
 networks:
   magento:
     driver: bridge
+
+volumes:
+  sock_data:                                  # Named volume for socket data
+  nginx_log:                                  # Named volume for Nginx logs
+  phpfpm_log:                                 # Named volume for PHP-FPM logs
+  redis_data:                                 # Named volume for Redis data
+  mysql_data:                                 # Named volume for MySQL data
+  mysql_log:                                  # Named volume for MySQL logs
+  es_data:                                    # Named volume for Elasticsearch data
+  es_log:                                     # Named volume for Elasticsearch logs
