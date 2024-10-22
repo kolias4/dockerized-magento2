@@ -47,14 +47,16 @@
 4. Initialize Magento (Example. You can customize to you. [Installation Guide](https://experienceleague.adobe.com/docs/commerce-operations/installation-guide/advanced.html)):
 
    ```
-   docker compose exec -T phpfpm bin/magento setup:install --base-url=http://axsoula.gr/ --db-host=db --db-name=magento --db-user=magento --db-password=magento --backend-frontname=admin  --admin-firstname=admin --admin-lastname=admin --admin-email=yourname@domain.com --admin-user=admin --admin-password=admin1234 --language=en_US --currency=EUR --timezone=Europe/Athens --use-rewrites=1 --search-engine=elasticsearch7 --elasticsearch-host=elasticsearch --elasticsearch-port=9200 --elasticsearch-index-prefix=magento
+   docker-compose exec -T phpfpm bin/magento setup:install --base-url=http://magento-dev.com/ --db-host=db --db-name=magento --db-user=magento --db-password=magento --backend-frontname=admin  --admin-firstname=admin --admin-lastname=admin --admin-email=yourname@domain.com --admin-user=admin --admin-password=admin1234 --language=en_US --currency=EUR --timezone=Europe/Athens --use-rewrites=1 --search-engine=elasticsearch7 --elasticsearch-host=elasticsearch --elasticsearch-port=9200 --elasticsearch-index-prefix=magento
    ```
 
-5. Finalize magento config
+5. Disable 2 factor auth
 
 ```
 docker-compose exec -T phpfpm bash -c "bin/magento module:disable Magento_AdminAdobeImsTwoFactorAuth Magento_TwoFactorAuth && bin/magento cache:flush"
 
 ```
+
+6. Add magento-dev.com to /etc/hosts
 
 After above completes running, you should be able to access your site at http://magento-dev.com and http://magento-dev.com/admin

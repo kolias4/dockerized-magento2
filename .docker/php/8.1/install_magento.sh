@@ -24,4 +24,4 @@ echo "Setting ownership and making bin/magento executable..."
 chown -R :www-data .
 chmod u+x bin/magento
 
-echo "Magento installation and permissions setup complete!"
+echo "Magento installation and permissions complete!"
