@@ -52,10 +52,9 @@
 
 5. Disable 2 factor auth
 
-```
-docker-compose exec -T phpfpm bash -c "bin/magento module:disable Magento_AdminAdobeImsTwoFactorAuth Magento_TwoFactorAuth && bin/magento cache:flush"
-
-```
+   ```
+   docker-compose exec -T phpfpm bash -c "bin/magento module:disable Magento_AdminAdobeImsTwoFactorAuth Magento_TwoFactorAuth && bin/magento cache:flush"
+   ```
 
 6. Add magento-dev.com to /etc/hosts
 
