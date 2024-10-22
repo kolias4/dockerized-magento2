@@ -2,7 +2,6 @@
 
 # Define environment variables
 INSTALL_DIR="/var/www/html"
-MAGENTO_VERSION="2.4.7-p3"
 
 # Set the ownership of the /var/www directory to www-data
 echo "Setting ownership of /var/www to www-data..."

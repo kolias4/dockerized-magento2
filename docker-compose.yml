@@ -12,8 +12,8 @@ services:
       - ./magento:/var/www/html          # Keep local directory for Magento
       - sock_data:/sock                  # Named volume
       - nginx_log:/var/log/nginx          # Named volume
-      #- ./frontend/${FRONTEND_VENDOR_NAME}:/var/www/html/app/design/frontend/${FRONTEND_VENDOR_NAME}
-      #- ./backend/${BACKEND_VENDOR_NAME}:/var/www/html/app/code/${BACKEND_VENDOR_NAME}
+    environment:
+      SERVER_NAME: ${MAGENTO_DEV_DOMAIN}
     networks:
       - magento
 
@@ -23,12 +23,11 @@ services:
     links:
       - db
     volumes:
-      # - ./.docker/php/${PHP_VERSION}/.composer:/var/www/.composer
       - ./magento:/var/www/html          # Keep local directory for Magento
       - sock_data:/sock                  # Named volume
       - phpfpm_log:/var/log              # Named volume
-      #- ./frontend/${FRONTEND_VENDOR_NAME}:/var/www/html/app/design/frontend/${FRONTEND_VENDOR_NAME}
-      #- ./backend/${BACKEND_VENDOR_NAME}:/var/www/html/app/code/${BACKEND_VENDOR_NAME}
+    environment:
+      MAGENTO_VERSION: ${MAGENTO_VERSION}
     networks:
       - magento
 
